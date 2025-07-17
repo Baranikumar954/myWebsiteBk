@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="sampleweb.css">
     <link rel="shortcut icon" href="BKlogo.jpeg" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
 </head>
+
 <body>
     <header>
         <div class="navbar" id="navbar">
@@ -153,8 +156,8 @@
                 <li><a href="#navbar" target="_blank">My Portfolio</a></li>
                 <li><a href="https://baranikumar954.github.io/project-qr-code/" target="_blank">QR code Generation</a></li>
                 <li><a href="https://baranikumar954.github.io/Todo/" target="_blank">To Do App</a></li>
-                <li><a href="https://intelli-quest.vercel.app/">IntelliQuest</a></li>
-                <li><a href="https://employee-attendance-system-ashen.vercel.app/">Employee Attendance System</a></li>
+                <li><a href="https://intelli-quest.vercel.app/" target="_blank">IntelliQuest</a></li>
+                <li><a href="https://employee-attendance-system-ashen.vercel.app/" target="_blank">Employee Attendance System</a></li>
             </ul>
         </div>
     </div>
@@ -229,43 +232,44 @@
         <div class="contact-containerBox contact-right">
             <form id="contactForm">
                 <h1>Send us a message🚀</h1>
-                <input type="text" id="fullName" placeholder="Full name" required>
+                
+                <input type="text" id="fullName" name="fullName" placeholder="Full name" required>
                 <br>
-                <input type="email" id="email" placeholder="Email address" required>
+                
+                <input type="email" id="email" name="email" placeholder="Email address" required>
                 <br>
-                <input type="text" id="subject" placeholder="Subject">
+                
+                <input type="text" id="subject" name="subject" placeholder="Subject">
                 <br>
-                <textarea id="messageBox" rows="4" cols="25" placeholder="Tell us more about your project..." required></textarea>
+                
+                <textarea id="messageBox" name="message" rows="4" cols="25" placeholder="Tell us more about your project..." required></textarea>
                 <br>
+                
                 <button type="submit">Send message</button>
             </form>
-            <script>
-                document.getElementById('contactForm').addEventListener('submit', function(event) {
-                    event.preventDefault();
-            
-                    const fullName = document.getElementById('fullName').value;
-                    const email = document.getElementById('email').value;
-                    const subject = document.getElementById('subject').value;
-                    const message = document.getElementById('messageBox').value;
-            
-                    // Send data to the server via fetch (using POST method)
-                    fetch('http://localhost:3000/send', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ fullName, email, subject, message }),
-                    })
-                    .then(response => response.json())
-                    .then(data => {
+
+            <!-- Include EmailJS Library -->
+            <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+            <script type="text/javascript">
+            // Initialize EmailJS with your Public Key
+            (function() {
+                emailjs.init("819ik7AfpPHkb76eg"); // Replace with your public key from EmailJS
+            })();
+
+            // Handle Form Submission
+            document.getElementById('contactForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                emailjs.sendForm('service_f0ikcfm', 'template_ztkqinm', this)
+                    .then(function(response) {
                         alert('Message sent successfully!');
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
+                    }, function(error) {
+                        console.log('FAILED...', error);
                         alert('There was an error sending the message.');
                     });
-                });
+            });
             </script>
+
         </div>  
     </div>
     <footer>
